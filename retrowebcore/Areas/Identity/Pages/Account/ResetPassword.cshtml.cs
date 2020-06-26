@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using retrowebcore.Data;
+using retrowebcore.Persistences;
 
 namespace retrowebcore.Areas.Identity.Pages.Account
 {

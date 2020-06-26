@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace retrowebcore.Data
+namespace retrowebcore.Persistences
 {
     public static class StringExtension
     {

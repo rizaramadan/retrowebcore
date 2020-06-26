@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using retrowebcore.Data;
+using retrowebcore.Persistences;
 
 [assembly: HostingStartup(typeof(retrowebcore.Areas.Identity.IdentityHostingStartup))]
 namespace retrowebcore.Areas.Identity

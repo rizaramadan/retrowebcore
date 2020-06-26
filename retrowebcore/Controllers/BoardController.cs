@@ -9,18 +9,20 @@ using retrowebcore.Models;
 
 namespace retrowebcore.Controllers
 {
-    public class HomeController : Controller
+    public class BoardController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        const string BoardList = nameof(BoardList);
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ILogger<BoardController> _logger;
+
+        public BoardController(ILogger<BoardController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult List()
         {
-            return View();
+            return View(BoardList);
         }
 
         public IActionResult Privacy()

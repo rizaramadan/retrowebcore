@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using retrowebcore.Data;
+using retrowebcore.Persistences;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EFCore.NamingConventions;
 using Microsoft.Extensions.Options;
+using retrowebcore.Hubs;
 
 namespace retrowebcore
 {
@@ -43,6 +44,7 @@ namespace retrowebcore
                 .AddEntityFrameworkStores<AppDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,8 +73,9 @@ namespace retrowebcore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Board}/{action=List}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<BoardHub>($"/{nameof(BoardHub).ToLower()}");
             });
         }
     }
