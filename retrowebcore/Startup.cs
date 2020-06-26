@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EFCore.NamingConventions;
+using Microsoft.Extensions.Options;
 
 namespace retrowebcore
 {
@@ -33,7 +34,12 @@ namespace retrowebcore
                     .UseSnakeCaseNamingConvention()
                 );
             services
-                .AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultIdentity<AppUser>(options => {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequiredLength = 4;
+                    options.Password.RequiredUniqueChars = 0;
+                    options.Password.RequireNonAlphanumeric = false;
+                }) 
                 .AddEntityFrameworkStores<AppDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -53,7 +59,7 @@ namespace retrowebcore
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
