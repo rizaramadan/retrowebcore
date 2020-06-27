@@ -19,13 +19,12 @@ namespace retrowebcore.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<ulong>", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<decimal>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("numeric(20,0)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -52,7 +51,7 @@ namespace retrowebcore.Migrations
                     b.ToTable("app_roles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<ulong>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,9 +67,9 @@ namespace retrowebcore.Migrations
                         .HasColumnName("claim_value")
                         .HasColumnType("text");
 
-                    b.Property<long>("RoleId")
+                    b.Property<decimal>("RoleId")
                         .HasColumnName("role_id")
-                        .HasColumnType("bigint");
+                        .HasColumnType("numeric(20,0)");
 
                     b.HasKey("Id")
                         .HasName("pk_role_claims");
@@ -81,7 +80,7 @@ namespace retrowebcore.Migrations
                     b.ToTable("app_role_claims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<ulong>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,9 +96,9 @@ namespace retrowebcore.Migrations
                         .HasColumnName("claim_value")
                         .HasColumnType("text");
 
-                    b.Property<long>("UserId")
+                    b.Property<decimal>("UserId")
                         .HasColumnName("user_id")
-                        .HasColumnType("bigint");
+                        .HasColumnType("numeric(20,0)");
 
                     b.HasKey("Id")
                         .HasName("pk_user_claims");
@@ -110,7 +109,7 @@ namespace retrowebcore.Migrations
                     b.ToTable("app_user_claims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<ulong>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnName("login_provider")
@@ -126,9 +125,9 @@ namespace retrowebcore.Migrations
                         .HasColumnName("provider_display_name")
                         .HasColumnType("text");
 
-                    b.Property<long>("UserId")
+                    b.Property<decimal>("UserId")
                         .HasColumnName("user_id")
-                        .HasColumnType("bigint");
+                        .HasColumnType("numeric(20,0)");
 
                     b.HasKey("LoginProvider", "ProviderKey")
                         .HasName("pk_user_logins");
@@ -139,15 +138,15 @@ namespace retrowebcore.Migrations
                     b.ToTable("app_user_logins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<ulong>", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<decimal>("UserId")
                         .HasColumnName("user_id")
-                        .HasColumnType("bigint");
+                        .HasColumnType("numeric(20,0)");
 
-                    b.Property<long>("RoleId")
+                    b.Property<decimal>("RoleId")
                         .HasColumnName("role_id")
-                        .HasColumnType("bigint");
+                        .HasColumnType("numeric(20,0)");
 
                     b.HasKey("UserId", "RoleId")
                         .HasName("pk_user_roles");
@@ -158,11 +157,11 @@ namespace retrowebcore.Migrations
                     b.ToTable("app_user_roles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<ulong>", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<decimal>("UserId")
                         .HasColumnName("user_id")
-                        .HasColumnType("bigint");
+                        .HasColumnType("numeric(20,0)");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnName("login_provider")
@@ -184,13 +183,12 @@ namespace retrowebcore.Migrations
                     b.ToTable("app_user_tokens");
                 });
 
-            modelBuilder.Entity("retrowebcore.Data.AppUser", b =>
+            modelBuilder.Entity("retrowebcore.Persistences.AppUser", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<decimal>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("numeric(20,0)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnName("access_failed_count")
@@ -263,22 +261,22 @@ namespace retrowebcore.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("app_users");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<ulong>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<ulong>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .HasConstraintName("fk_role_claims_asp_net_roles_identity_role_long_id")
+                        .HasConstraintName("fk_role_claims_asp_net_roles_identity_role_ulong_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<ulong>", b =>
                 {
-                    b.HasOne("retrowebcore.Data.AppUser", null)
+                    b.HasOne("retrowebcore.Persistences.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("fk_user_claims_asp_net_users_app_user_id")
@@ -286,9 +284,9 @@ namespace retrowebcore.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<ulong>", b =>
                 {
-                    b.HasOne("retrowebcore.Data.AppUser", null)
+                    b.HasOne("retrowebcore.Persistences.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("fk_user_logins_asp_net_users_app_user_id")
@@ -296,16 +294,16 @@ namespace retrowebcore.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<ulong>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<ulong>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .HasConstraintName("fk_user_roles_asp_net_roles_identity_role_long_id")
+                        .HasConstraintName("fk_user_roles_asp_net_roles_identity_role_ulong_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("retrowebcore.Data.AppUser", null)
+                    b.HasOne("retrowebcore.Persistences.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("fk_user_roles_asp_net_users_app_user_id")
@@ -313,9 +311,9 @@ namespace retrowebcore.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<ulong>", b =>
                 {
-                    b.HasOne("retrowebcore.Data.AppUser", null)
+                    b.HasOne("retrowebcore.Persistences.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("fk_user_tokens_asp_net_users_app_user_id")

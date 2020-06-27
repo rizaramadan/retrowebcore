@@ -11,7 +11,6 @@ namespace retrowebcore.Hubs
     {
         public async Task SendMessage(string user, string message)
         {
-            Thread.Sleep(4000);
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
     }
