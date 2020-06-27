@@ -52,6 +52,8 @@ namespace retrowebcore.Persistences
                 else
                     entity.SetTableName(tablename);
             }
+
+            builder.Entity<Board>().HasIndex(g => g.Slug).IsUnique();
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -60,13 +62,13 @@ namespace retrowebcore.Persistences
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             BeforeSaving();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
-        public Task<int> SaveChangesHardDeleteAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<int> SaveChangesHardDeleteAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             BeforeSaving();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);

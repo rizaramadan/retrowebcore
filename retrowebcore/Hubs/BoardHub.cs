@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using retrowebcore.Handlers.Mediators;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace retrowebcore.Hubs
         public async Task addNewBoard(string squad, string sprint)
         {
             var board = await _mediator.Send(new CreateBoardRequest{ Squad = squad, Sprint = sprint });
-            await Clients.All.SendAsync("hubNewBoardEvent", squad, board.Name);
+            var json = JsonConvert.SerializeObject(new { squad = board.Name, sprint = board.Description, slug = board.Slug });
+            await Clients.All.SendAsync("hubNewBoardEvent", json);
         }
     }
 }

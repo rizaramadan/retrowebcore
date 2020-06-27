@@ -7,23 +7,30 @@ document.getElementById("addNewBoard").disabled = true;
 
 const SQUAD_TEMPLATE = '<[[SQUAD_NAME]]>';
 const SPRINT_TEMPLATE = '<[[SPRINT_NAME]]>';
+const SLUG_TEMPLATE = '<[[SLUG]]>';
 
 var TEMPLATE = `
         <div class="col-3 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"> <[[SQUAD_NAME]]> </h5>
+                    <h5 class="card-title"> ${SQUAD_TEMPLATE} </h5>
                     <p class="card-text">
-                        <[[SPRINT_NAME]]>
+                        ${SPRINT_TEMPLATE}
                     </p>
-                    <a href="#" class="btn btn-primary">Go to Board</a>
+                    <a href="/board/view/${SLUG_TEMPLATE}" class="btn btn-primary">Go to Board</a>
+                    <a href="/board/archive/${SLUG_TEMPLATE}" class="btn btn-warning">Archive</a>
                 </div>
             </div>
         </div>`;
 
-connection.on("hubNewBoardEvent", function (squad, sprint) {
+connection.on("hubNewBoardEvent", function (responseJson) {
+    var response = JSON.parse(responseJson);
+    var newBoard = TEMPLATE
+        .replace(SQUAD_TEMPLATE, response.squad)
+        .replace(SPRINT_TEMPLATE, response.sprint)
+        .replace(SLUG_TEMPLATE, response.slug)
+        .replace(SLUG_TEMPLATE, response.slug);
     $('#sendButtonSpinner').addClass("hidden");
-    var newBoard = TEMPLATE.replace(SQUAD_TEMPLATE, squad).replace(SPRINT_TEMPLATE, sprint)
     $('#boardContainer').append(newBoard);
 });
 

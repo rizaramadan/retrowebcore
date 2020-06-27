@@ -10,6 +10,16 @@ using System.Threading.Tasks;
 
 namespace retrowebcore.Handlers.Mediators
 {
+    public class BoardHandlerBase
+    {
+        protected readonly AppDbContext _context;
+        public BoardHandlerBase(AppDbContext c)
+        {
+            _context = c;
+        }
+    }
+
+
     #region BoardListRequest
     public class BoardListRequest : IRequest<BoardListResponse> 
     {
@@ -17,14 +27,10 @@ namespace retrowebcore.Handlers.Mediators
         public int Limit { get; set; } = 100;
     }
 
-    public class BoardListHandler : IRequestHandler<BoardListRequest, BoardListResponse>
+    public class BoardListHandler : BoardHandlerBase, IRequestHandler<BoardListRequest, BoardListResponse>
     {
         static readonly string BoardListHandlerQuery = nameof(BoardListHandlerQuery);
-        readonly AppDbContext _context;
-        public BoardListHandler(AppDbContext c) 
-        {
-            _context = c;
-        }
+        public BoardListHandler(AppDbContext c): base(c) { }
 
         public async Task<BoardListResponse> Handle(BoardListRequest r, CancellationToken ct)
         {
@@ -64,20 +70,39 @@ namespace retrowebcore.Handlers.Mediators
         public string Sprint { get; set; }
     }
 
-    public class CreateBoardHandler : IRequestHandler<CreateBoardRequest, Board>
+    public class CreateBoardHandler : BoardHandlerBase, IRequestHandler<CreateBoardRequest, Board>
     {
-        readonly AppDbContext _context;
-        public CreateBoardHandler(AppDbContext c)
-        {
-            _context = c;
-        }
-
+        public CreateBoardHandler(AppDbContext c): base(c) { }
         public async Task<Board> Handle(CreateBoardRequest request, CancellationToken ct)
         {
-            var newBoard = new Board { Name = $"{request.Squad} <[<[]>]> {request.Sprint}" };
+            var newBoard = new Board 
+            { 
+                Name = request.Squad, 
+                Description = request.Sprint, 
+                Slug = Guid.NewGuid()
+            };
             await _context.AddAsync(newBoard);
             await _context.SaveChangesAsync(ct);
             return newBoard;
+        }
+    }
+    #endregion
+
+    #region ArchiveBoardRequest
+    public class ArchiveBoardRequest : IRequest
+    {
+        public Guid Slug { get; set; }
+    }
+
+    public class ArchiveBoardHandler : BoardHandlerBase, IRequestHandler<ArchiveBoardRequest>
+    {
+        public ArchiveBoardHandler(AppDbContext c) : base(c) { }
+        public async Task<Unit> Handle(ArchiveBoardRequest request, CancellationToken cancellationToken)
+        {
+            var board = await _context.Boards.FirstOrDefaultAsync(x => x.Slug == request.Slug);
+            _context.Boards.Remove(board);
+            await _context.SaveChangesAsync();
+            return default;
         }
     }
     #endregion

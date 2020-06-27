@@ -6,6 +6,8 @@ namespace retrowebcore.Models
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+        public Guid? Slug { get; set; }
         public long Creator { get; set; }
         public DateTime Created { get; set; }
         public long Updator { get; set; }

@@ -44,6 +44,7 @@ namespace retrowebcore
                 }) 
                 .AddEntityFrameworkStores<AppDbContext>();
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
             services.AddRazorPages();
             services.AddSignalR();
             services.AddMediatR(typeof(Startup));

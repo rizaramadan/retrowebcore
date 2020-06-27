@@ -30,9 +30,10 @@
                         <div class="card-body">
                             <h5 class="card-title">@each.Name</h5>
                             <p class="card-text">
-                                Retro of sprint name
+                                @each.Description
                             </p>
-                            <a href="#" class="btn btn-primary">Go to board</a>
+                            <a href="/board/view/@each.Slug" class="btn btn-primary">Go to board</a>
+                            <a href="/board/archive/@each.Slug" class="btn btn-warning">Archive</a>
                         </div>
                     </div>
                 </div>
