@@ -27,6 +27,7 @@ namespace retrowebcore.Controllers
         public async Task<IActionResult> List()
         {
             var response = await _mediator.Send(new BoardListRequest());
+            ViewData["RootContainerClass"] = "container-fluid";
             return View(BoardList, response);
         }
 
