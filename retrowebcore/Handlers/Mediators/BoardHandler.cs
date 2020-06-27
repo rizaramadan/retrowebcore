@@ -106,4 +106,22 @@ namespace retrowebcore.Handlers.Mediators
         }
     }
     #endregion
+
+    #region View Board
+    public class ViewBoardRequest : IRequest<Board>
+    { 
+        public Guid Slug { get; set; }
+    }
+
+    public class ViewBoardHandler : BoardHandlerBase, IRequestHandler<ViewBoardRequest, Board> 
+    {
+        public ViewBoardHandler(AppDbContext c) : base(c) { }
+
+        public async Task<Board> Handle(ViewBoardRequest request, CancellationToken ct)
+        {
+            var board = await _context.Boards.FirstOrDefaultAsync(x => x.Slug == request.Slug);
+            return board;
+        }
+    }
+    #endregion
 }
