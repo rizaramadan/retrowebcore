@@ -1,5 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+@{ 
+    ViewData["RootContainerClass"] = "container";
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,7 +34,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="@ViewData["RootContainerClass"]">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

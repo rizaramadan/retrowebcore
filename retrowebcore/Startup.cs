@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using EFCore.NamingConventions;
 using Microsoft.Extensions.Options;
 using retrowebcore.Hubs;
+using MediatR;
 
 namespace retrowebcore
 {
@@ -45,6 +46,7 @@ namespace retrowebcore
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSignalR();
+            services.AddMediatR(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

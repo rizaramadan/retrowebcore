@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using retrowebcore.Handlers.Mediators;
 using retrowebcore.Models;
 
 namespace retrowebcore.Controllers
@@ -13,16 +15,19 @@ namespace retrowebcore.Controllers
     {
         const string BoardList = nameof(BoardList);
 
-        private readonly ILogger<BoardController> _logger;
+        readonly ILogger<BoardController> _logger;
+        readonly IMediator _mediator;
 
-        public BoardController(ILogger<BoardController> logger)
+        public BoardController(ILogger<BoardController> l, IMediator m)
         {
-            _logger = logger;
+            _logger = l;
+            _mediator = m;
         }
 
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            return View(BoardList);
+            var response = await _mediator.Send(new BoardListRequest());
+            return View(BoardList, response);
         }
 
         public IActionResult Privacy()

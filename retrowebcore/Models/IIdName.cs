@@ -7,7 +7,7 @@ namespace retrowebcore.Models
 {
     public interface IIdName
     {
-        ulong Id { get; set; }
+        long Id { get; set; }
         string Name { get; set; }
     }
 }

@@ -1,31 +1,46 @@
-﻿@{
+﻿@model retrowebcore.Handlers.Mediators.BoardListResponse 
+@{
     ViewData["Title"] = "Home Page";
+    ViewData["RootContainerClass"] = "container-fluid";
 }
 
 <div class="container">
     <div class="row">
-        <input class="col-3 form-control" type="text" id="userInput" placeholder="" value="" required="">
+        <input class="col-3 form-control mr-1" type="text" id="squadName" placeholder="Squad name" value="" required />
+        <input class="col-3 form-control mr-1" type="text" id="sprintName" placeholder="Sprint name" value="" required />
         <div class="invalid-feedback">
             Valid first name is required.
         </div>
         <div class="col-3">
-            <button class="btn btn-primary" type="button" id="sendButton">
-                Send Message
+            <button class="btn btn-primary" type="button" id="addNewBoard">
+                Add new board
                 <span class="spinner-border spinner-border-sm hidden" id="sendButtonSpinner" role="status" aria-hidden="true"></span>
             </button>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <hr />
+<hr />
+<div class="container-fluid">
+    <div class="row" id="boardContainer">
+        @{ 
+            foreach (var each in Model.Data) 
+            {
+                <div class="col-3 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@each.Name</h5>
+                            <p class="card-text">
+                                Retro of sprint name
+                            </p>
+                            <a href="#" class="btn btn-primary">Go to board</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>
-<div class="row">
-    <div class="col-6">
-        <ul id="messagesList"></ul>
-    </div>
-</div>
+
 
 @section Scripts {
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>

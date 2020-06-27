@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using MediatR;
+using Microsoft.AspNetCore.SignalR;
+using retrowebcore.Handlers.Mediators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,15 @@ namespace retrowebcore.Hubs
 {
     public class BoardHub : Hub
     {
-        public async Task SendMessage(string user, string message)
+        readonly IMediator _mediator;
+        public BoardHub(IMediator m) => _mediator = m;
+
+
+        [HubMethodName("hubAddNewBoard")]
+        public async Task addNewBoard(string squad, string sprint)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            var board = await _mediator.Send(new CreateBoardRequest{ Squad = squad, Sprint = sprint });
+            await Clients.All.SendAsync("hubNewBoardEvent", squad, board.Name);
         }
     }
 }
