@@ -16,12 +16,28 @@
         margin-bottom: 1rem;
     }
 
+    #likeLane {
+        background-color: #d9f7be
+    }
+
+    #lackedLane {
+        background-color: #ffccc7
+    }
+
+    #learnedLane {
+        background-color: #bae7ff
+    }
+
+    #longedLane {
+        background-color: #efdbff
+    }
+
 </style>
 }
 
 <div class="row flex-row flex-sm-nowrap">
     <div class="col-sm-6 col-md-4 col-xl-3">
-        <div class="card bg-light">
+        <div class="card" id="likeLane">
             <div class="card-body">
                 <h6 class="card-title text-uppercase text-truncate py-1">Liked</h6>
                 <div class="items border border-light">
@@ -38,7 +54,7 @@
                         </div>
                     </div>
                     <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
-                    <div class="card draggable shadow-sm" id="cd2" draggable="true" ondragstart="drag(event)">
+                    <div class="card draggable shadow-sm dropzone" id="cd2" draggable="true" ondragstart="drag(event)"  ondrop="merge(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)">
                         <div class="card-body p-2">
                             <div class="card-title">
                                 <img src="//placehold.it/30" class="rounded-circle float-right">
@@ -69,7 +85,7 @@
         </div>
     </div>
     <div class="col-sm-6 col-md-4 col-xl-3">
-        <div class="card bg-light">
+        <div class="card" id="lackedLane">
             <div class="card-body">
                 <h6 class="card-title text-uppercase text-truncate py-1 ">Lacked</h6>
                 <div class="items border border-light">
@@ -104,7 +120,7 @@
         </div>
     </div>
     <div class="col-sm-6 col-md-4 col-xl-3">
-        <div class="card bg-light">
+        <div class="card" id="learnedLane">
             <div class="card-body">
                 <h6 class="card-title text-uppercase text-truncate py-1 ">Learned</h6>
                 <div class="items border border-light">
@@ -126,9 +142,9 @@
         </div>
     </div>
     <div class="col-sm-6 col-md-4 col-xl-3">
-        <div class="card bg-light">
+        <div class="card" id="longedLane">
             <div class="card-body">
-                <h6 class="card-title text-uppercase text-truncate py-1 ">Longer For</h6>
+                <h6 class="card-title text-uppercase text-truncate py-1 ">Longed For</h6>
                 <div class="items border border-light">
                     <div class="card draggable shadow-sm" id="cd11" draggable="true" ondragstart="drag(event)">
                         <div class="card-body p-2">
@@ -160,7 +176,6 @@
             </div>
         </div>
     </div>
-    
 </div>
 
 @section Scripts {
@@ -197,6 +212,11 @@
         updateDropzones();
     }
 
+    const merge = (event) => {
+        event.preventDefault();
+        alert("drop ke kartu coy");
+    }
+
     const updateDropzones = () => {
         /* after dropping, refresh the drop target areas
           so there is a dropzone after each item
@@ -205,7 +225,7 @@
         var dz = $('<div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>');
 
         // delete old dropzones
-        $('.dropzone').remove();
+        $('.dropzone').not('.card').remove();
 
         // insert new dropdzone after each item   
         dz.insertAfter('.card.draggable');
