@@ -1,0 +1,16 @@
+﻿@*
+    Views/Shared/Components/Board/Default.cshtml
+    this is BoardViewComponent's  cshtml
+*@
+@model Board
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">
+            @Model.Description
+        </p>
+        <a href="/board/view/@Model.Slug" class="btn btn-primary">Go to board</a>
+        <a href="/board/archive/@Model.Slug" class="btn btn-warning">Archive</a>
+    </div>
+</div>
+

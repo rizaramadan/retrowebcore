@@ -73,3 +73,34 @@ body {
 .hidden {
   display: none;
 }
+
+.card.draggable {
+    margin-bottom: 1rem;
+    cursor: grab;
+}
+
+.droppable {
+    background-color: var(--success);
+    min-height: 120px;
+    margin-bottom: 1rem;
+}
+
+#likedLaneBase {
+    background-color: #d9f7be
+}
+
+#lackedLaneBase {
+    background-color: #ffccc7
+}
+
+#learnedLaneBase {
+    background-color: #bae7ff
+}
+
+#longedforLaneBase {
+    background-color: #efdbff
+}
+
+.card-body.card-board {
+    padding: 1em !important;
+}

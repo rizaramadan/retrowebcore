@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -40,7 +38,6 @@ namespace retrowebcore.Controllers
 
             var board = await _mediator.Send(new ViewBoardRequest{ Slug = id });
             return View(BoardView, board);
-
         }
 
         public IActionResult Privacy() => View();

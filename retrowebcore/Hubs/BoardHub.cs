@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using retrowebcore.Handlers.Mediators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace retrowebcore.Hubs

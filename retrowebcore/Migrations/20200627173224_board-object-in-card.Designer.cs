@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using retrowebcore.Persistences;
@@ -10,9 +11,10 @@ using retrowebcore.Persistences;
 namespace retrowebcore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200627173224_board-object-in-card")]
+    partial class boardobjectincard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -287,10 +289,6 @@ namespace retrowebcore.Migrations
                         .HasColumnName("slug")
                         .HasColumnType("uuid");
 
-                    b.Property<int?>("SortOrder")
-                        .HasColumnName("sort_order")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("Updated")
                         .HasColumnName("updated")
                         .HasColumnType("timestamp without time zone");
@@ -503,7 +501,7 @@ namespace retrowebcore.Migrations
             modelBuilder.Entity("retrowebcore.Models.Card", b =>
                 {
                     b.HasOne("retrowebcore.Models.Board", "Board")
-                        .WithMany("Cards")
+                        .WithMany()
                         .HasForeignKey("BoardId")
                         .HasConstraintName("fk_cards_boards_board_id")
                         .OnDelete(DeleteBehavior.Cascade)

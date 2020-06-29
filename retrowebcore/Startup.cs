@@ -79,6 +79,7 @@ namespace retrowebcore
                     pattern: "{controller=Board}/{action=List}/{id?}");
                 endpoints.MapRazorPages();
                 endpoints.MapHub<BoardHub>($"/{nameof(BoardHub).ToLower()}");
+                endpoints.MapHub<CardHub>($"/{nameof(CardHub).ToLower()}");
             });
         }
     }

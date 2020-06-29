@@ -10,16 +10,6 @@ using System.Threading.Tasks;
 
 namespace retrowebcore.Handlers.Mediators
 {
-    public class BoardHandlerBase
-    {
-        protected readonly AppDbContext _context;
-        public BoardHandlerBase(AppDbContext c)
-        {
-            _context = c;
-        }
-    }
-
-
     #region BoardListRequest
     public class BoardListRequest : IRequest<BoardListResponse> 
     {
@@ -27,7 +17,7 @@ namespace retrowebcore.Handlers.Mediators
         public int Limit { get; set; } = 100;
     }
 
-    public class BoardListHandler : BoardHandlerBase, IRequestHandler<BoardListRequest, BoardListResponse>
+    public class BoardListHandler : HandlerBase, IRequestHandler<BoardListRequest, BoardListResponse>
     {
         static readonly string BoardListHandlerQuery = nameof(BoardListHandlerQuery);
         public BoardListHandler(AppDbContext c): base(c) { }
@@ -70,7 +60,7 @@ namespace retrowebcore.Handlers.Mediators
         public string Sprint { get; set; }
     }
 
-    public class CreateBoardHandler : BoardHandlerBase, IRequestHandler<CreateBoardRequest, Board>
+    public class CreateBoardHandler : HandlerBase, IRequestHandler<CreateBoardRequest, Board>
     {
         public CreateBoardHandler(AppDbContext c): base(c) { }
         public async Task<Board> Handle(CreateBoardRequest request, CancellationToken ct)
@@ -94,7 +84,7 @@ namespace retrowebcore.Handlers.Mediators
         public Guid Slug { get; set; }
     }
 
-    public class ArchiveBoardHandler : BoardHandlerBase, IRequestHandler<ArchiveBoardRequest>
+    public class ArchiveBoardHandler : HandlerBase, IRequestHandler<ArchiveBoardRequest>
     {
         public ArchiveBoardHandler(AppDbContext c) : base(c) { }
         public async Task<Unit> Handle(ArchiveBoardRequest request, CancellationToken cancellationToken)
@@ -108,19 +98,23 @@ namespace retrowebcore.Handlers.Mediators
     #endregion
 
     #region View Board
-    public class ViewBoardRequest : IRequest<Board>
+    public class ViewBoardRequest : IRequest<BoardDetail>
     { 
         public Guid Slug { get; set; }
     }
 
-    public class ViewBoardHandler : BoardHandlerBase, IRequestHandler<ViewBoardRequest, Board> 
+    public class ViewBoardHandler : HandlerBase, IRequestHandler<ViewBoardRequest, BoardDetail> 
     {
+        const string ViewBoardQuery = nameof(ViewBoardQuery);
         public ViewBoardHandler(AppDbContext c) : base(c) { }
 
-        public async Task<Board> Handle(ViewBoardRequest request, CancellationToken ct)
+        public async Task<BoardDetail> Handle(ViewBoardRequest request, CancellationToken ct)
         {
-            var board = await _context.Boards.FirstOrDefaultAsync(x => x.Slug == request.Slug);
-            return board;
+            var board = await _context.Boards
+                .TagWith(ViewBoardQuery)
+                .Include(x => x.Cards)
+                .FirstOrDefaultAsync(x => x.Slug == request.Slug);
+            return new BoardDetail(board);
         }
     }
     #endregion

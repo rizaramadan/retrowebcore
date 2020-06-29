@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using retrowebcore.Persistences;
@@ -10,9 +11,10 @@ using retrowebcore.Persistences;
 namespace retrowebcore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200627165343_board-id-on-card")]
+    partial class boardidoncard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -287,10 +289,6 @@ namespace retrowebcore.Migrations
                         .HasColumnName("slug")
                         .HasColumnType("uuid");
 
-                    b.Property<int?>("SortOrder")
-                        .HasColumnName("sort_order")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("Updated")
                         .HasColumnName("updated")
                         .HasColumnType("timestamp without time zone");
@@ -301,9 +299,6 @@ namespace retrowebcore.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_cards");
-
-                    b.HasIndex("BoardId")
-                        .HasName("ix_cards_board_id");
 
                     b.ToTable("cards");
                 });
@@ -496,16 +491,6 @@ namespace retrowebcore.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("fk_user_tokens_asp_net_users_app_user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("retrowebcore.Models.Card", b =>
-                {
-                    b.HasOne("retrowebcore.Models.Board", "Board")
-                        .WithMany("Cards")
-                        .HasForeignKey("BoardId")
-                        .HasConstraintName("fk_cards_boards_board_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

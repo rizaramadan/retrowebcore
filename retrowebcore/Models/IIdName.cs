@@ -9,5 +9,7 @@ namespace retrowebcore.Models
     {
         long Id { get; set; }
         string Name { get; set; }
+
+        Guid? Slug { get; set; }
     }
 }

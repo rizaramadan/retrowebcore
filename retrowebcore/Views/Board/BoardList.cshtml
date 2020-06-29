@@ -25,16 +25,7 @@
             foreach (var each in Model.Data) 
             {
                 <div class="col-3 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">@each.Name</h5>
-                            <p class="card-text">
-                                @each.Description
-                            </p>
-                            <a href="/board/view/@each.Slug" class="btn btn-primary">Go to board</a>
-                            <a href="/board/archive/@each.Slug" class="btn btn-warning">Archive</a>
-                        </div>
-                    </div>
+                    <vc:board board="each"> </vc:board>
                 </div>
             }
         }
