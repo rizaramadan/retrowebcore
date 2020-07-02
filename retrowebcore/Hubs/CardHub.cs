@@ -14,12 +14,11 @@ namespace retrowebcore.Hubs
         public CardHub(IMediator m) => _mediator = m;
 
         [HubMethodName("hubAddNewCard")]
-        public async Task addNewCard(string board, CardType type)
+        public async Task addNewCard(string board, string type)
         {
-            var card = await _mediator.Send(new CreateNewCard { BoardSlug = board, Type = type});
+            var card = await _mediator.Send(new CreateNewCard { BoardSlug = board, TypeStr = type});
             var json = JsonConvert.SerializeObject(card);
-            if(type == CardType.Liked)
-                await Clients.All.SendAsync($"hubNewCard{nameof(CardType.Liked)}Event", json);
+            await Clients.All.SendAsync("hubNewCardEvent", json);
         }
     }
 }

@@ -10,12 +10,13 @@
     @for (int i = 0; i < BoardDetail.CardTypes.Count; i++)
     {
         var each = BoardDetail.CardTypes[i];
+        var typeInt = (int)each;
         if (each == CardType.Unknown)
             continue;
         var idcardPrefix = $"id{each}";
         var idLane = $"{BoardDetail.Label[each].ToLower()}Lane".Replace(" ", "");
         var idLaneBase = $"{idLane}Base";
-        var idButtonAdd = $"{idLane}AddChild";
+        var idButtonAdd = $"{idLane}AddChild"; //likedLaneAddChild | lackedLaneAddChild | learnedLaneAddChild | longedforLaneAddChild
         var idButtonAddSpinner = $"{idButtonAdd}Spinner";
         <div class="col-sm-6 col-md-4 col-xl-3">
             <div class="card" id="@idLaneBase">
@@ -47,7 +48,7 @@
                 </div>
             </div>
             <div>
-                <button type="button" class="btn btn-light btn-lg btn-block" id="@idButtonAdd">
+                <button type="button" class="btn btn-light btn-lg btn-block lane-add-button" id="@idButtonAdd" data-type="@each">
                     Add new item
                     <span class="spinner-border spinner-border-sm hidden" id="@idButtonAddSpinner" role="status" aria-hidden="true"></span>
                 </button>

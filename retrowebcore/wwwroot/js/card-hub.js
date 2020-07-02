@@ -1,12 +1,11 @@
 ﻿"use strict";
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/cardhub").build();
-
-//Disable send button until connection is established
-document.getElementById("likedLaneAddChild").disabled = true;
-document.getElementById("lackedLaneAddChild").disabled = true;
-document.getElementById("learnedLaneAddChild").disabled = true;
-document.getElementById("longedforLaneAddChild").disabled = true;
+var cardTypes = {};
+cardTypes[1] = "liked";
+cardTypes[2] = "lacked";
+cardTypes[3] = "learned";
+cardTypes[4] = "longedfor";
 
 const CARD_ID_TEMPLATE = '<[[CARD_ID_TEMPLATE]]>';
 const CARD_CONTENT_TEMPLATE = '<[[CARD_CONTENT_TEMPLATE]]>';
@@ -24,33 +23,44 @@ var TEMPLATE = `
                 <p>
                     ${CARD_CONTENT_TEMPLATE}
                 </p>
-                <button class="btn btn-primary btn-sm">View</button>
+                <div class="row pl-3">
+                    <button class="btn btn-primary btn-sm col-10">View</button>
+                    <span class="col-2" data-feather="thumbs-up"></span>
+                </div>
             </div>
         </div>
         <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>`;
 
-connection.on("hubNewCardLikedEvent", function (responseJson) {
+//Disable send button until connection is established
+for (var i = 1; i < 5; i++)
+    document.getElementById(`${cardTypes[i]}LaneAddChild`).disabled = true;
+
+connection.on("hubNewCardEvent", function (responseJson) {
     var response = JSON.parse(responseJson);
     var newBoard = TEMPLATE
         .replace(CARD_ID_TEMPLATE, response.squad)
-        .replace(CARD_CONTENT_TEMPLATE, response.sprint)
-    $('#likedLaneAddChildSpinner').addClass("hidden");
-    $('#likedLane').append(newBoard);
+        .replace(CARD_CONTENT_TEMPLATE, response.sprint);
+    $(`#${cardTypes[response.CardType]}LaneAddChildSpinner`).addClass("hidden");
+    $(`#${cardTypes[response.CardType]}Lane`).append(newBoard);
+    feather.replace(); //to show icon in new card
 });
 
 connection.start().then(function () {
-    document.getElementById("likedLaneAddChild").disabled = false;
-    document.getElementById("lackedLaneAddChild").disabled = false;
-    document.getElementById("learnedLaneAddChild").disabled = false;
-    document.getElementById("longedforLaneAddChild").disabled = false;
+    for (var i = 1; i < 5; i++)
+        document.getElementById(`${cardTypes[i]}LaneAddChild`).disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
 });
 
-$("#likedLaneAddChild").click(function (event) {
-    $('#likedLaneAddChildSpinner').removeClass("hidden");
+$(".lane-add-button").click(function (event) {
+    var id = $(this).attr("id");
+    var spinnerIdSelector = `#${id}Spinner`;
+    var type = $(this).attr("data-type");
+    $(spinnerIdSelector).removeClass("hidden");
     var boardslug = $("#board-id").attr('data-name');
-    connection.invoke("hubAddNewCard", boardslug, 1).catch(function (err) {
+    connection.invoke("hubAddNewCard", boardslug, type).catch(function (err) {
+        $(spinnerIdSelector).addClass("hidden");
+        alert(err.toString());
         return console.error(err.toString());
     });
     event.preventDefault();

@@ -16,13 +16,16 @@ namespace retrowebcore.Handlers.Mediators
         public string BoardSlug { get; set; }
         public CardType Type { get; set; }
         public Guid Slug { get; set; }
+        public string TypeStr { get; set; }
 
         public bool ValidateSlug()
         {
-            var canParse = Guid.TryParse(BoardSlug, out Guid result);
-            if (canParse)
+            var canParseSLug = Guid.TryParse(BoardSlug, out Guid result);
+            var canParseType = Enum.TryParse<CardType>(TypeStr, out CardType cardType);
+            if (canParseSLug && canParseType)
             {
                 Slug = result;
+                Type = cardType;
                 return true;
             }
             return false;
