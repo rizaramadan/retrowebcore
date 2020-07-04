@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "retrowebcore", "retrowebcore\retrowebcore.csproj", "{94A5BCD9-67F0-4B66-8638-4E8EBDB99135}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "retrowebcore.Tests", "retrowebcoreTests\retrowebcore.Tests.csproj", "{C911F95E-2304-45C5-A523-291500499236}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "retrowebcore.Tests", "retrowebcore.Tests\retrowebcore.Tests.csproj", "{C911F95E-2304-45C5-A523-291500499236}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88930B86-3532-4FAB-8FD8-16A28BA59F8C}"
 	ProjectSection(SolutionItems) = preProject

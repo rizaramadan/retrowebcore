@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using retrowebcore.Handlers.Mediators;
+using retrowebcore.Handlers.Boards;
 using retrowebcore.Models;
 using retrowebcore.Persistences;
 using System;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace retrowebcore.Handlers.Mediators.Tests
+namespace retrowebcore.Handlers.Boards.Tests
 {
     public class TestDbContext : AppDbContext
     {
