@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace retrowebcore.Handlers.Mediators
+namespace retrowebcore.Handlers.Boards
 {
     #region View Board
     public class ViewBoardRequest : IRequest<BoardDetail>

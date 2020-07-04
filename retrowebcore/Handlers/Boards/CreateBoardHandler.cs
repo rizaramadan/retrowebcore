@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace retrowebcore.Handlers.Mediators
+namespace retrowebcore.Handlers.Boards
 {
     public class CreateBoardRequest : IRequest<Board>
     {

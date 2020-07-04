@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Newtonsoft.Json; //TODO: remove this dependency from this file
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,9 @@ namespace retrowebcore.Models
         public Card() => Slug = Guid.NewGuid();
         public long Id { get; set; }
         public long BoardId { get; set; }
-        [JsonIgnore]
+        
+        //TODO: remove JsonIgnore from this file
+        [JsonIgnore] 
         public Board Board { get; set; }
         public string Name { get; set; }
         public Guid? Slug { get; set; }

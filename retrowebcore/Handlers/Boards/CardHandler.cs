@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace retrowebcore.Handlers.Mediators
+namespace retrowebcore.Handlers.Boards
 {
     #region create new card
     public class CreateNewCard : IRequest<Card>

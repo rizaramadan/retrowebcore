@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace retrowebcore.Handlers.Mediators
+namespace retrowebcore.Handlers.Boards
 {
     public class BoardListRequest : IRequest<BoardListResponse>
     {

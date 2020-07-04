@@ -1,6 +1,6 @@
 ﻿using retrowebcore.Persistences;
 
-namespace retrowebcore.Handlers.Mediators
+namespace retrowebcore.Handlers.Boards
 {
     public abstract class BoardHandlerBase
     {
