@@ -12,10 +12,8 @@ namespace retrowebcore.Views.ViewComponents
     {
         public CardViewComponent(AppDbContext c) : base(c) { }
 
-        public async Task<IViewComponentResult> InvokeAsync(Card card)
-        {
-            return View(card);
-        }
+        public async Task<IViewComponentResult> InvokeAsync(Card card) =>
+            await Task.FromResult(View(card));
 
     }
 }

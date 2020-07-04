@@ -36,6 +36,11 @@ namespace retrowebcore.Persistences
         const string InvalidPrefix = "asp_net_";
         const string ValidPrefix = "app_";
 
+        /// <summary>
+        /// well, this is quite hacky, for testing purpose. Dont touch this in production, keep it null
+        /// </summary>
+        protected long? ScopedUserId = null;
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -54,6 +59,15 @@ namespace retrowebcore.Persistences
             }
 
             builder.Entity<Board>().HasIndex(g => g.Slug).IsUnique();
+        }
+
+        protected string GetScopedUserId() 
+        {
+            if (ScopedUserId.HasValue)
+                return $"{ScopedUserId.Value}";
+
+            var httpContextAccessor = this.GetService<IHttpContextAccessor>();
+            return httpContextAccessor?.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -76,8 +90,7 @@ namespace retrowebcore.Persistences
 
         void BeforeSaving()
         {
-            var httpContextAccessor = this.GetService<IHttpContextAccessor>();
-            var userId = httpContextAccessor?.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetScopedUserId();
             long? userLong = long.TryParse(userId, out var result) ? result : default;
 
             foreach (var entry in ChangeTracker.Entries())

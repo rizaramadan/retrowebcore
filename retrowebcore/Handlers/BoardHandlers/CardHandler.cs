@@ -32,7 +32,7 @@ namespace retrowebcore.Handlers.Mediators
         }
     }
 
-    public class CreateNewCardHandler : HandlerBase, IRequestHandler<CreateNewCard, Card>
+    public class CreateNewCardHandler : BoardHandlerBase, IRequestHandler<CreateNewCard, Card>
     {
         public CreateNewCardHandler(AppDbContext c) : base(c) { }
         public async Task<Card> Handle(CreateNewCard req, CancellationToken ct)

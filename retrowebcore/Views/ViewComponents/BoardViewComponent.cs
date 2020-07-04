@@ -12,10 +12,8 @@ namespace retrowebcore.Views.ViewComponents
     {
         public BoardViewComponent(AppDbContext c) : base(c) { }
 
-        public async Task<IViewComponentResult> InvokeAsync(Board board) 
-        {
-            return View(board);
-        }
+        public async Task<IViewComponentResult> InvokeAsync(Board board) =>
+            await Task.FromResult(View(board));
         
     }
 }
