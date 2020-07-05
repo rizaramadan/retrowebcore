@@ -21,6 +21,7 @@ namespace retrowebcore.Controllers
             _mediator = m;
         }
 
-        protected void SetLayoutToCentered() => ViewData[R.RootContainerClass] = "container";
+        protected void SetLayoutToCentered() => 
+            ViewData[R.RootContainerClass] = "container";
     }
 }
