@@ -1,1 +1,1 @@
-﻿This folder is where all of our handlers are.
+﻿This folder is where all of our mediator handlers are. We use mediator for many things, in fact almost all things.

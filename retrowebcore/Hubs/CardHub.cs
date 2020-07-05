@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using retrowebcore.Handlers.Boards;
+using retrowebcore.Handlers.Presenters;
 using retrowebcore.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace retrowebcore.Hubs
         public async Task addNewCard(string board, string type)
         {
             var card = await _mediator.Send(new CreateNewCard { BoardSlug = board, TypeStr = type});
-            var json = JsonConvert.SerializeObject(card);
+            var json = await _mediator.Send(new CardToJsonRequest(card));
             await Clients.All.SendAsync("hubNewCardEvent", json);
         }
     }

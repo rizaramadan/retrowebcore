@@ -35,7 +35,7 @@ namespace retrowebcore
                     options.Password.RequireNonAlphanumeric = false;
                 }) 
                 .AddEntityFrameworkStores<AppDbContext>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(); 
             services.AddHttpContextAccessor();
             services.AddRazorPages();
             services.AddSignalR();
