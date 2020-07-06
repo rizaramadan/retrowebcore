@@ -12,30 +12,13 @@ using System.Threading.Tasks;
 
 namespace retrowebcore.Handlers.Boards.Tests
 {
-    public class TestDbContext : AppDbContext
-    {
-        public TestDbContext(DbContextOptions<AppDbContext> o, long user) : base(o) =>
-            ScopedUserId = user;
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            builder.Entity<Card>()
-                .Ignore(x => x.LikerId)
-                .Ignore(x => x.RelatedCardId)
-                .Ignore(x => x.comments);
-        }
-    }
-
     [TestFixture()]
     public class ArchiveBoardHandlerTests
     {
         [Test()]
         public async Task HandleTest()
         {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: nameof(ArchiveBoardHandlerTests))
-                .Options;
+            var options = TestDbContext.NewDefaultOption();
 
             using var context = new TestDbContext(options, long.MaxValue);
 
