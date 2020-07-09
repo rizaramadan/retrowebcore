@@ -1,10 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
 using retrowebcore.Handlers.Boards;
 using retrowebcore.Handlers.Presenters;
-using retrowebcore.Models;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace retrowebcore.Hubs
