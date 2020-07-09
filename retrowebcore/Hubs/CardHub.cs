@@ -14,7 +14,7 @@ namespace retrowebcore.Hubs
         [HubMethodName("hubAddNewCard")]
         public async Task addNewCard(string board, string type)
         {
-            var card = await _mediator.Send(new CreateNewCard { BoardSlug = board, TypeStr = type});
+            var card = await _mediator.Send(new CreateNewCard { BoardSlug = board, TypeStr = type });
             var json = await _mediator.Send(new CardToJsonRequest(card));
             await Clients.All.SendAsync("hubNewCardEvent", json);
         }
