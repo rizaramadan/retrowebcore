@@ -24,8 +24,24 @@
         @{ 
             foreach (var each in Model.Data) 
             {
-                <div class="col-3 mb-3">
-                    <vc:board board="each"> </vc:board>
+                <div class="col-3 mb-3" id="container-@each.Slug">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@each.Name</h5>
+                            <p class="card-text">
+                                @each.Description
+                            </p>
+                            <a href="/board/view/@each.Slug" class="btn btn-primary">Go to board</a>
+                            <button class="btn btn-warning archive-action" type="button" id="@each.Slug">
+                                Archive
+                                <span class="spinner-border spinner-border-sm hidden archive-spinner" 
+                                      id="spinner-@each.Slug" 
+                                      role="status" 
+                                      aria-hidden="true">
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             }
         }

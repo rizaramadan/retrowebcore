@@ -22,16 +22,6 @@ namespace retrowebcore.Controllers
         public async Task<IActionResult> List() =>
             View(BoardList, await _mediator.Send(new BoardListRequest()));
 
-        public async Task<IActionResult> Archive(Guid id) 
-        {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            await _mediator.Send(new ArchiveBoardRequest{ Slug = id });
-            var response = await _mediator.Send(new BoardListRequest());
-            return View(BoardList, response);
-        }
-
         public async Task<IActionResult> View(Guid id) 
         {
             if (!ModelState.IsValid)

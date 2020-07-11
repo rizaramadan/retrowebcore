@@ -35,7 +35,7 @@ var TEMPLATE = `
 for (var i = 1; i < 5; i++)
     document.getElementById(`${cardTypes[i]}LaneAddChild`).disabled = true;
 
-connection.on("hubNewCardEvent", function (responseJson) {
+connection.on(hubNewCardEvent, function (responseJson) {
     var response = JSON.parse(responseJson);
     var newBoard = TEMPLATE
         .replace(CARD_ID_TEMPLATE, response.squad)
@@ -58,7 +58,7 @@ $(".lane-add-button").click(function (event) {
     var type = $(this).attr("data-type");
     $(spinnerIdSelector).removeClass("hidden");
     var boardslug = $("#board-id").attr('data-name');
-    connection.invoke("hubAddNewCard", boardslug, type).catch(function (err) {
+    connection.invoke(hubAddNewCard, boardslug, type).catch(function (err) {
         $(spinnerIdSelector).addClass("hidden");
         alert(err.toString());
         return console.error(err.toString());

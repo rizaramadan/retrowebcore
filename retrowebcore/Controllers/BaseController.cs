@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace retrowebcore.Controllers
 {
-    public class BaseController<T> : Controller
+    public abstract class BaseController<T> : Controller
     {
         const string BoardList = nameof(BoardList);
 

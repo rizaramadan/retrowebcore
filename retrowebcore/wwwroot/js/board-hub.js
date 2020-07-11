@@ -1,9 +1,9 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/boardhub").build();
-
-//Disable send button until connection is established
-document.getElementById("addNewBoard").disabled = true;
+const disabled = 'disabled';
+//Disable buttons until connection is established
+$('#addNewBoard').prop(disabled, true);
+$('.archive-action').prop(disabled, true);
 
 const SQUAD_TEMPLATE = '<[[SQUAD_NAME]]>';
 const SPRINT_TEMPLATE = '<[[SPRINT_NAME]]>';
@@ -23,7 +23,9 @@ var TEMPLATE = `
             </div>
         </div>`;
 
-connection.on("hubNewBoardEvent", function (responseJson) {
+var connection = new signalR.HubConnectionBuilder().withUrl("/boardhub").build();
+
+connection.on(hubNewBoardEvent, function (responseJson) {
     var response = JSON.parse(responseJson);
     var newBoard = TEMPLATE
         .replace(SQUAD_TEMPLATE, response.squad)
@@ -34,8 +36,13 @@ connection.on("hubNewBoardEvent", function (responseJson) {
     $('#boardContainer').append(newBoard);
 });
 
+connection.on(hubArchiveEvent, function (slug) {
+    $(`#container-${slug}`).remove();
+});
+
 connection.start().then(function () {
-    document.getElementById("addNewBoard").disabled = false;
+    $('#addNewBoard').prop(disabled, false);
+    $('.archive-action').prop(disabled, false);
 }).catch(function (err) {
     return console.error(err.toString());
 });
@@ -44,7 +51,16 @@ $("#addNewBoard").click(function (event) {
     $('#sendButtonSpinner').removeClass("hidden");
     var squad = document.getElementById("squadName").value;
     var sprint = document.getElementById("sprintName").value;
-    connection.invoke("hubAddNewBoard", squad, sprint).catch(function (err) {
+    connection.invoke(hubAddNewBoard, squad, sprint).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});
+
+$('.archive-action').click(function (event) {
+    var slug = $(this).attr('id');
+    $(`#spinner-${slug}`).removeClass("hidden");
+    connection.invoke(hubArchiveBoard, slug).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
